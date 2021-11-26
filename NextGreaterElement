@@ -1,0 +1,26 @@
+class NextGreaterElement {
+    public int[] nextGreaterElements(int[] nums) {
+        Stack<Integer> stack = new Stack<>();
+        
+        int[] res = new int[nums.length];
+        
+        for(int i = 2*(nums.length)-1; i >= 0; i--){
+            if(stack.isEmpty()){
+                res[i%nums.length] = -1;
+            }else if(stack.size() > 0 && stack.peek() > nums[i%(nums.length)]){
+                res[i%nums.length] = stack.peek();
+            }else if(stack.size() > 0 && stack.peek() <= nums[i%(nums.length)]){
+                while(stack.size() > 0 && stack.peek() <= nums[i%(nums.length)]){
+                    stack.pop();
+                }
+                if(stack.size() == 0){
+                    res[i%nums.length] = -1;
+                }else{
+                    res[i%nums.length] = stack.peek();
+                }
+            }
+            stack.push(nums[i%nums.length]);
+        }
+        return res;
+    }
+}
